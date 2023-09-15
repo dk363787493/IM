@@ -1,0 +1,25 @@
+syntax = "v1"
+
+type (
+	// 定义登录接口的 json 请求体
+	LoginReq {
+		UserId   string `json:"userid"`
+		Password string `json:"password"`
+	}
+	// 定义登录接口的 json 响应体
+	LoginResp {
+		Staus int64  `json:"status"`
+		Msg   string `json:"msg"`
+	}
+)
+
+service user {
+	// 定义 http.HandleFunc 转换的 go 文件名称及方法
+	@handler WebSocketLogin
+	// 定义接口
+	// 请求方法为 post
+	// 路由为 /user/login
+	// 请求体为 LoginReq
+	// 响应体为 LoginResp，响应体必须有 returns 关键字修饰
+	post /user/login (LoginReq) returns (LoginResp)
+}
