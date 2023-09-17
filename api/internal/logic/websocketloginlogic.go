@@ -43,7 +43,7 @@ func (l *WebSocketLoginLogic) WebSocketLogin(w http.ResponseWriter, r *http.Requ
 	}
 
 	conn, err := upgrader.Upgrade(w, r, nil)
-
+	conn.ReadMessage()
 	if err != nil {
 		logx.Error(err)
 		return
