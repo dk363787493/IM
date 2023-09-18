@@ -16,6 +16,8 @@ var upgrader = websocket.Upgrader{
 	CheckOrigin: func(r *http.Request) bool {
 		return true
 	},
+	ReadBufferSize:  1024,
+	WriteBufferSize: 1024,
 }
 
 type WebSocketLoginLogic struct {
@@ -43,11 +45,10 @@ func (l *WebSocketLoginLogic) WebSocketLogin(w http.ResponseWriter, r *http.Requ
 	}
 
 	conn, err := upgrader.Upgrade(w, r, nil)
-	conn.ReadMessage()
 	if err != nil {
 		logx.Error(err)
 		return
 	}
-
+	l.svcCtx.WebSocketCtx.AddWs(userId, conn)
 	return
 }
